@@ -1,28 +1,51 @@
 const {ApolloServer} = require('apollo-server');
 
 const typeDefs = `
+    
+    # 1. Add Photo type definition
+    type Photo {
+        id: ID!
+        url: String!
+        name: String!
+        description: String
+    }
+
+    # 2. Return Photo from allPhotos
     type Query {
         totalPhotos: Int!
+        allPhotos: [Photo!]!
     }
     
+    # 3. Return the newly posted photo from mutation
     type Mutation {
-        postPhoto(name: String! description: String): Boolean!
+        postPhoto(name: String! description: String): Photo!
     }
 `;
 
+let _id = 0;
 const photos = [];
 
 const resolvers = {
     Query: {
-        totalPhotos: () => photos.length
+        totalPhotos: () => photos.length,
+        allPhotos: () => photos
     },
 
     Mutation: {
         postPhoto(parent, args) {
-            photos.push(args);
+            const newPhoto = {
+                id: _id++,
+                ...args
+            };
 
-            return true
+            photos.push(newPhoto);
+
+            return newPhoto
         }
+    },
+
+    Photo: {
+        url: parent => `http://yoursite.com/img/${parent.id}.jpg`
     }
 };
 

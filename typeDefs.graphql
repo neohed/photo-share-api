@@ -16,6 +16,11 @@ type User {
     inPhotos: [Photo!]!
 }
 
+type AuthPayload {
+    token: String!
+    user: User!
+}
+
 # 1. Add Photo type definition
 type Photo {
     id: ID!
@@ -45,4 +50,5 @@ type Query {
 # 3. Return the newly posted photo from mutation
 type Mutation {
     postPhoto(input: PostPhotoInput!): Photo!
+    githubAuth(code: String!): AuthPayload!
 }

@@ -3,6 +3,7 @@ const {ApolloServer} = require('apollo-server-express');
 const { MongoClient } = require('mongodb');
 const { readFileSync } = require('fs');
 const expressPlayground = require('graphql-playground-middleware-express').default;
+//const BasicLogging = require('./BasicLogging');
 const {resolvers} = require('./resolvers');
 
 require('dotenv').config();
@@ -14,7 +15,11 @@ async function start() {
     let db;
 
     try {
-        const client = await MongoClient.connect(MONGO_DB, { useNewUrlParser: true })
+        const client = await MongoClient.connect(MONGO_DB, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+
         db = client.db()
     } catch (err) {
         console.log(`
@@ -39,7 +44,8 @@ async function start() {
                 db,
                 currentUser
             }
-        }
+        },
+        //extensions: [() => new BasicLogging()]
     });
 
     server.applyMiddleware({ app });

@@ -34,7 +34,6 @@ module.exports = {
     },
 
     async githubAuth(parent, { code }, { db }) {
-
         let {
             message,
             access_token,

@@ -27,5 +27,6 @@
     "mongodb": "^3.4.1",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.2"
-  }
+  },
+  "devDependencies": {}
 }

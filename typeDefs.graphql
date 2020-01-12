@@ -1,11 +1,3 @@
-enum PhotoCategory {
-    SELFIE
-    PORTRAIT
-    ACTION
-    LANDSCAPE
-    GRAPHIC
-}
-
 scalar DateTime
 
 type User {
@@ -16,16 +8,11 @@ type User {
     inPhotos: [Photo!]!
 }
 
-type AuthPayload {
-    token: String!
-    user: User!
-}
-
 # 1. Add Photo type definition
 type Photo {
     id: ID!
-    url: String!
     name: String!
+    url: String!
     description: String
     category: PhotoCategory!
     postedBy: User!
@@ -33,22 +20,44 @@ type Photo {
     created: DateTime!
 }
 
+enum PhotoCategory {
+    SELFIE
+    PORTRAIT
+    ACTION
+    LANDSCAPE
+    GRAPHIC
+}
+
 input PostPhotoInput {
     name: String!
-    category: PhotoCategory=PORTRAIT
+    category: PhotoCategory = PORTRAIT
     description: String
+}
+
+type AuthPayload {
+    token: String!
+    user: User!
 }
 
 # 2. Return Photo from allPhotos
 type Query {
-    totalPhotos: Int!
-    allPhotos: [Photo!]!
+    # People
+    me: User
     totalUsers: Int!
     allUsers: [User!]!
+    User(login: ID!): User
+
+    # Photos
+    totalPhotos: Int!
+    allPhotos: [Photo!]!
+    Photo(id: ID!): Photo
 }
 
 # 3. Return the newly posted photo from mutation
 type Mutation {
     postPhoto(input: PostPhotoInput!): Photo!
+    tagPhoto(githubLogin: ID! photoID: ID!): Photo!
     githubAuth(code: String!): AuthPayload!
+    addFakeUsers(count: Int = 1): [User!]!
+    fakeUserAuth(githubLogin: ID!): AuthPayload!
 }

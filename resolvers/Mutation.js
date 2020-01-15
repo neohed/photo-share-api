@@ -21,7 +21,6 @@ module.exports = {
     },
 
     async tagPhoto(parent, args, { db }) {
-
         await db.collection('tags')
             .replaceOne(args, args, { upsert: true });
 

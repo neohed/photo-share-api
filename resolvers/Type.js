@@ -2,9 +2,7 @@ const { GraphQLScalarType } = require('graphql');
 const { ObjectID } = require('mongodb');
 
 module.exports = {
-
     Photo: {
-
         id: parent => parent.id || parent._id,
 
         url: parent => `/img/photos/${parent._id}.jpg`,
@@ -24,13 +22,10 @@ module.exports = {
             return db.collection('users')
                 .find({ githubLogin: { $in: logins }})
                 .toArray()
-
         }
-
     },
 
     User: {
-
         postedPhotos: (parent, args, { db }) =>
             db.collection("photos")
                 .find({ userID: parent.githubLogin })
@@ -47,9 +42,7 @@ module.exports = {
             return db.collection('photos')
                 .find({ _id: { $in: photoIDs }})
                 .toArray()
-
         }
-
     },
 
     DateTime: new GraphQLScalarType({
@@ -59,5 +52,4 @@ module.exports = {
         serialize: value => new Date(value).toISOString(),
         parseLiteral: ast => ast.value
     })
-
 };

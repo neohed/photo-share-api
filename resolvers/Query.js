@@ -1,7 +1,6 @@
 const { ObjectID } = require('mongodb');
 
 module.exports = {
-
     me: (parent, args, { currentUser }) => currentUser,
 
     totalPhotos: (parent, args, { db }) =>
@@ -29,5 +28,4 @@ module.exports = {
     User: (parent, args, { db }) =>
         db.collection('users')
             .findOne({ githubLogin: args.login })
-
 };

@@ -51,6 +51,9 @@ type Query {
     totalPhotos: Int!
     allPhotos: [Photo!]!
     Photo(id: ID!): Photo
+
+    # Misc
+    sayHi: String
 }
 
 # 3. Return the newly posted photo from mutation

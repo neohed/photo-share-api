@@ -1,6 +1,8 @@
 const { ObjectID } = require('mongodb');
 
 module.exports = {
+    sayHi: () => 'Hi',
+
     me: (parent, args, { currentUser }) => currentUser,
 
     totalPhotos: (parent, args, { db }) =>
